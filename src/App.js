@@ -131,15 +131,6 @@ function TaskList({list, selectedFilter, Status, toggleProgress}){
           <span>
             {(task.status === 'Done') ? <del>{task.name}</del> : <span>{task.name}</span>} : {task.status}
           </span>
-
-          {task.status === 'Done' ?(
-            <span>
-              <del>{task.name}</del> : {task.status}
-            </span> //adds strike through to a in {a}:{b}
-          ):( //ternary operator not {a}:{b}
-            <span>{task.name} : {task.status}</span> //{a}:{b}
-          )}
-
         </li> 
       ))}
     </ul>
