@@ -129,7 +129,7 @@ function TaskList({list, selectedFilter, Status, toggleProgress}){
           &nbsp;
 
           <span>
-            {(task.status === 'Done') ? <del>{task.name}</del> : <span>{task.name}</span>} : {task.status}
+            {(task.status === 'Done') ? <del>{task.name}</del> : <span>{task.name}</span>}
           </span>
         </li> 
       ))}
