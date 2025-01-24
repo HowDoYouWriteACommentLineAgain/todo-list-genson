@@ -1,4 +1,3 @@
-// import logo from './logo.svg';
 import './App.css';
 import React , {useState} from 'react';
 
@@ -7,7 +6,7 @@ export default function TodoList(){
   TODO:
   [WIP] Seperate Create and Read from Update and delete so that I can lift the states up.
   [DONE] Make CR it's own prop
-  [WIP] Make UD it's own prop
+  [Done] Make ~UD~ TaskList it's own prop
   
   */
   const Status = { //bakit walang enums, what the heck is typescript?
@@ -30,13 +29,14 @@ export default function TodoList(){
 
       // Tatlong oras kong hinahanap anung mali nung una
       // Da't pala `status: ...c, status: c.status` di pwedeng `...c, c.status` lang
-      //Reminder to use '`key:value`   
+      //Reminder to use '`key:value`
+      
   }
 
   return(
     <>
       <h1>To do List</h1>
-      <CR //cr for Create and Read
+      <TodoHeader //cr for Create and Read
         selectedFilter={selectedFilter} 
         setFilter={setFilter}
         handleList={(taskName) => 
@@ -49,51 +49,21 @@ export default function TodoList(){
             }
           ])}
         Status={Status}
-      ></CR>
+      />
 
       <hr/>
       
-      <ul>
-
-        {
-        list
-        .filter((task) => selectedFilter === Status.Null ? true : task.status === selectedFilter)
-        .map(task =>( //iterates and renders the list
-
-          <li key = {task.id}>
-
-    
-            <input
-              type="checkbox"
-              checked={task.status === Status.D ? true : false} //ensures that checkbox are checked if task was done
-              onClick={()=>{
-                toggleProgress(task.id)
-              }}
-            />
-
-            &nbsp;
-
-            {task.status === 'Done' ?(
-              <span>
-                <del>{task.name}</del> : {task.status}
-              </span> //adds strike through to a in {a}:{b}
-            ):( //ternary operator not {a}:{b}
-              <span>{task.name} : {task.status}</span> //{a}:{b}
-            )}
-
-
-            {/* <button onClick={() => toggleProgress(task.id)}>Check off</button>  */}
-            {/*button to check off*/}
-          </li> 
-
-        ))}
-
-      </ul>
+      <TaskList
+      list = {list}
+      selectedFilter = {selectedFilter}
+      Status = {Status}
+      toggleProgress = {toggleProgress}
+      />
     </>
   )
 }
 
-function CR({selectedFilter, setFilter, handleList, Status}){
+function TodoHeader({selectedFilter, setFilter, handleList, Status}){
   const [taskName, setTaskName] = useState('');
   return(
     <>
@@ -135,11 +105,60 @@ function CR({selectedFilter, setFilter, handleList, Status}){
   )
 }
 
-// function UD({})
+function TaskList({list, selectedFilter, Status, toggleProgress}){
+  return(
+    <ul>
+      {
+      list
+      .filter((task) => selectedFilter === Status.Null ? true : task.status === selectedFilter)
+      .map(task =>( //iterates and renders the list
+
+        <li 
+          key = {task.id}
+          onClick={()=>toggleProgress(task.id)} //got tired aiming for the checkbox all the time.
+        >
+
+          <input
+            type="checkbox"
+            checked={task.status === Status.D ? true : false} //ensures that checkbox are checked if task was done
+            onClick={()=>{
+              toggleProgress(task.id)
+            }}
+          />
+
+          &nbsp;
+
+          <span>
+            {(task.status === 'Done') ? <del>{task.name}</del> : <span>{task.name}</span>} : {task.status}
+          </span>
+
+          {task.status === 'Done' ?(
+            <span>
+              <del>{task.name}</del> : {task.status}
+            </span> //adds strike through to a in {a}:{b}
+          ):( //ternary operator not {a}:{b}
+            <span>{task.name} : {task.status}</span> //{a}:{b}
+          )}
+
+        </li> 
+      ))}
+    </ul>
+  )
+}
 
 
 /*
-Personal Notes cos gah knows I ain't rememberin anything after I'm done with this activity
-1. 
+Legacy code in case I need it.
+
+{task.status === 'Done' ?(
+  <span>
+    <del>{task.name}</del> : {task.status}
+  </span> //adds strike through to a in {a}:{b}
+):( //ternary operator not {a}:{b}
+  <span>{task.name} : {task.status}</span> //{a}:{b}
+)}
+
+  <button onClick={() => toggleProgress(task.id)}>Check off</button> 
+  button to check off
 
 */
