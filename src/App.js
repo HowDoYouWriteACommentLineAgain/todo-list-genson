@@ -13,7 +13,7 @@ export default function TodoList(){
   const Status = { //bakit walang enums, what the heck is typescript?
     IP : "In Progress",
     D : "Done",
-    Null : null
+    Null : "All"
   }
 
   const [selectedFilter, setFilter] = useState(Status.Null)
@@ -54,12 +54,18 @@ export default function TodoList(){
       <hr/>
       
       <ul>
-        {list.map(task =>(
+
+        {
+        list
+        .filter((task) => selectedFilter === Status.Null ? true : task.status === selectedFilter)
+        .map(task =>( //iterates and renders the list
 
           <li key = {task.id}>
 
             {task.status === 'Done' ?(
-              <span><del>{task.name}</del> : {task.status}</span> //adds strike through to a in {a}:{b}
+              <span>
+                <del>{task.name}</del> : {task.status}
+              </span> //adds strike through to a in {a}:{b}
             ):( //ternary operator not {a}:{b}
               <span>{task.name} : {task.status}</span> //{a}:{b}
             )}
@@ -83,7 +89,8 @@ function CR({selectedFilter, setFilter, handleList, Status}){
       {/*Add Logic : CREATE*/}
       <input
         value = {taskName}
-        onChange={e=>setTaskName(e.target.value)}
+        onChange={e=>setTaskName(e.target.value)
+        }
       />
 
       &nbsp;    
@@ -98,9 +105,9 @@ function CR({selectedFilter, setFilter, handleList, Status}){
       {/*Filter Logic : READ*/}
       <select
       value={selectedFilter}
-      onChange={e => setFilter(e.target.value)}        
+      onChange={e => {setFilter(e.target.value); console.log('current filter: ', e.target.value);}}   
       >
-        <option value = {Status.Null} default>
+        <option value = {Status.Null}>
           All
         </option>
 
