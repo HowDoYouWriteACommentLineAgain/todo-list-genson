@@ -96,7 +96,7 @@ function TodoList(){
   )
 }
 
-export default TodoList();
+export default TodoList;
 /*
 Personal Notes cos gah knows I ain't rememberin anything after I'm done with this activity
 1. 
