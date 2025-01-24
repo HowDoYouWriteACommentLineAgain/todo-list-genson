@@ -24,6 +24,7 @@ export default function TodoList(){
       value = {task}
       onChange={e=>setTask(e.target.value)}
       />
+      &nbsp;    
       <button onClick={()=>{
         setList([
           ...list,
@@ -36,7 +37,7 @@ export default function TodoList(){
         setTask('')
       }}>Add</button>
       <hr/>
-
+      
       <ul>
         {list.map(task =>(
 
