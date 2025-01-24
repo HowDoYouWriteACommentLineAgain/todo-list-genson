@@ -61,24 +61,29 @@ export default function TodoList(){
         .map(task =>( //iterates and renders the list
 
           <li key = {task.id}>
-            
-            
-            <input 
-            type="checkbox" 
-            onClick={()=>toggleProgress(task.id)}
+
+    
+            <input
+              type="checkbox"
+              checked={task.status === Status.D ? true : false} //ensures that checkbox are checked if task was done
+              onClick={()=>{
+                toggleProgress(task.id)
+              }}
             />
-            {/* <button onClick={() => toggleProgress(task.id)}>Check off</button>  */}
-            {/*button to check off*/}
 
             &nbsp;
 
             {task.status === 'Done' ?(
               <span>
-                <del>{task.name}</del></span> //adds strike through to a in {a}:{b}
+                <del>{task.name}</del> : {task.status}
+              </span> //adds strike through to a in {a}:{b}
             ):( //ternary operator not {a}:{b}
-              <span>{task.name}</span> //{a}:{b}
-            )}  
+              <span>{task.name} : {task.status}</span> //{a}:{b}
+            )}
 
+
+            {/* <button onClick={() => toggleProgress(task.id)}>Check off</button>  */}
+            {/*button to check off*/}
           </li> 
 
         ))}
