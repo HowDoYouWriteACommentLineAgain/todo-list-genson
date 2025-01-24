@@ -2,7 +2,7 @@
 import './App.css';
 import React , {useState} from 'react';
 
-export default function TodoList(){
+function TodoList(){
 
   const Status = { //bakit walang enums, what the heck is typescript?
     IP : "In Progress",
@@ -12,11 +12,13 @@ export default function TodoList(){
 
   const [task, setTask] = useState('');
   const [list, setList] = useState([]);
-  const [status, setStatus] = useState(Status.Null)
+  const [selectedStatus, setStatus] = useState(Status.Null)
 
   function toggleProgress(index){
       const searchList = list.map((c, i)=>
         i === index ? {...c, status: c.status === Status.IP ? Status.D : Status.IP} : c
+      //I hate that it works, it's confusing but it works
+      // cond1 ? { ..., cond2 ? ifTrueCond2 : ifFalseCond1 } : ifFalsecond1
       );
       setList(searchList);
   }
@@ -35,7 +37,7 @@ export default function TodoList(){
       &nbsp;    
       <button onClick={()=>{
         setList([
-          ...list,
+          ...list, //array spread like butter
           {
             id: list.length,
             name: task,
@@ -46,34 +48,47 @@ export default function TodoList(){
       }}>Add</button>
       &nbsp;    
       <select
-      // value={}
-      // onChange={}        
+      value={selectedStatus}
+      onChange={e => setStatus(e.target.value)}        
       >
+
         <option value = {Status.Null} default>
           All
         </option>
+
         <option value = {Status.IP} >
           In Progress
         </option>
+
         <option value = {Status.D}>
           Done
         </option>
+
       </select>
       <hr/>
       
       <ul>
-        {list.map(task =>(
+        {/*note is there a way to make this map immutable*/}
+        {/*Changing this should hopefully not change the actual ilst but idk.*/}
+        {
+        
+        /*Filtering*/
+
+        // list.filter()
+        
+        list.map(task =>(
 
           <li key = {task.id}>
 
             {task.status === 'Done' ?(
-              <span><del>{task.name}</del> : {task.status}</span>
+              <span><del>{task.name}</del> : {task.status}</span> //adds strike through
             ):(
               <span>{task.name} : {task.status}</span>
             )}
 
             &nbsp;    
-            <button onClick={() => toggleProgress(task.id)}>Check off</button>
+
+            <button onClick={() => toggleProgress(task.id)}>Check off</button> {/*button to check off*/}
           </li> 
         ))}
       </ul>
@@ -81,7 +96,7 @@ export default function TodoList(){
   )
 }
 
-
+export default TodoList();
 /*
 Personal Notes cos gah knows I ain't rememberin anything after I'm done with this activity
 1. 
