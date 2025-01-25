@@ -1,7 +1,7 @@
 import './App.css';
 import React , {useState} from 'react';
 
-export default function TodoList(){
+export default function TodoList(style){
   /*
   TODO:
   [WIP] Seperate Create and Read from Update and delete so that I can lift the states up.
@@ -34,7 +34,7 @@ export default function TodoList(){
   }
 
   return(
-    <>
+    <div style={style}>
       <h1>To do List</h1>
       <TodoHeader //cr for Create and Read
         selectedFilter={selectedFilter} 
@@ -59,7 +59,7 @@ export default function TodoList(){
       Status = {Status}
       toggleProgress = {toggleProgress}
       />
-    </>
+    </div>
   )
 }
 
@@ -129,7 +129,7 @@ function TaskList({list, selectedFilter, Status, toggleProgress}){
           &nbsp;
 
           <span>
-            {(task.status === 'Done') ? <del>{task.name}</del> : <span>{task.name}</span>}
+            {(task.status === 'Done') ? <del>{task.name}</del> : <span>{task.name}</span>} : {task.status}
           </span>
         </li> 
       ))}
