@@ -1,6 +1,7 @@
 import './App.css';
 import React , {useState} from 'react';
 
+
 export default function TodoList(){
   /*
   TODO:
@@ -15,7 +16,8 @@ export default function TodoList(){
     Null : "All"
   }
 
-  const [selectedFilter, setFilter] = useState(Status.Null)
+  console.log(Status.Null)
+  const [selectedFilter, setFilter] = useState(Status.Null);
   const [list, setList] = useState([]);
   
 
@@ -34,7 +36,7 @@ export default function TodoList(){
   }
 
   return(
-    <>
+    <div id="todoList">
       <h1>To do List</h1>
       <TodoHeader //cr for Create and Read
         selectedFilter={selectedFilter} 
@@ -59,7 +61,7 @@ export default function TodoList(){
       Status = {Status}
       toggleProgress = {toggleProgress}
       />
-    </>
+    </div>
   )
 }
 
@@ -129,7 +131,7 @@ function TaskList({list, selectedFilter, Status, toggleProgress}){
           &nbsp;
 
           <span>
-            {(task.status === 'Done') ? <del>{task.name}</del> : <span>{task.name}</span>}
+            {(task.status === 'Done') ? <del>{task.name}</del> : <span>{task.name}</span>} : {task.status}
           </span>
         </li> 
       ))}
